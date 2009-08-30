@@ -2,6 +2,7 @@ require 'rake'
 require 'rake/gempackagetask'
 require 'spec/rake/spectask'
 require 'hangman_tournament/submit'
+require 'metric_fu'
 
 desc "Run all specs"
 Spec::Rake::SpecTask.new('spec') do |t|
