@@ -4,6 +4,9 @@ require 'spec/rake/spectask'
 require 'hangman_tournament/submit'
 require 'metric_fu'
 
+desc 'Run specs and stats; build and install gem; open app'
+task :default => [:spec, :gem, :install, :run]
+
 desc "Run all specs"
 Spec::Rake::SpecTask.new('spec') do |t|
   t.spec_files = FileList['spec/**/*.rb']
@@ -39,6 +42,16 @@ end
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.need_zip = false
   pkg.need_tar = false
+end
+
+desc 'Install gem'
+task :install do
+  system "sudo gem install pkg/hangman_#{PKG_NAME}"
+end
+
+desc 'Run app'
+task :run do
+  system 'open hangman.lll'
 end
 
 desc "Submit your player"
