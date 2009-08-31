@@ -27,9 +27,22 @@ describe Kerryb::Kerryb do
     end
 
     it 'uses the suggested guess from the word list' do
-      letter = 'x'
-      @possibilities.stub(:suggest_guess).and_return letter
-      @game.guess('___', 7).should == letter
+      @possibilities.stub(:suggest_guess).and_return 'x'
+      @game.guess('___', 7).should == 'x'
+    end
+  end
+
+  describe 'after an incorrect guess' do
+    it 'marks the letter as used' do
+      @possibilities.should_receive(:letter_used).with 'z'
+      @game.incorrect_guess 'z'
+    end
+  end
+
+  describe 'after a correct guess' do
+    it 'marks the letter as used' do
+      @possibilities.should_receive(:letter_used).with 'z'
+      @game.correct_guess 'z'
     end
   end
 end

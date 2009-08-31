@@ -14,6 +14,6 @@ describe 'Playing a game' do
     game.correct_guess 'n'
     game.guess('an_', 2).should == 't'
     game.correct_guess 't'
-    game.result 'win', 'ant'
+    game.game_result 'win', 'ant'
   end
 end

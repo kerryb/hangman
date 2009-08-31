@@ -30,10 +30,12 @@ module Kerryb
 
     # notifies you that your last guess was incorrect, and passes your guess back to the method
     def incorrect_guess(guess)
+      @possibilities.letter_used guess
     end
 
     # notifies you that your last guess was correct, and passes your guess back to the method
     def correct_guess(guess)
+      @possibilities.letter_used guess
     end
 
     # you lost the game.  The reason is in the reason parameter

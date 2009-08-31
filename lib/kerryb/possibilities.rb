@@ -4,6 +4,7 @@ module Kerryb
 
     def initialize words
       @words = words.dup
+      @letters = ('a'..'z').to_a
     end
 
     def narrow_down pattern
@@ -16,11 +17,15 @@ module Kerryb
       find_highest_count letter_counts
     end
 
+    def letter_used letter
+      @letters.delete letter
+    end
+
     private
 
     def count_letters_in_all_words
       concatenated_words = @words.join('')
-      ('a'..'z').map {|letter| concatenated_words.count letter}
+      @letters.map {|letter| concatenated_words.count letter}
     end
 
     def find_highest_count letter_counts
@@ -31,7 +36,7 @@ module Kerryb
           highest_count = count
         end
       end
-      ('a'..'z').to_a[winning_index]
+      @letters.to_a[winning_index]
     end
   end
 end
