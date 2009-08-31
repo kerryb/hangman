@@ -5,7 +5,7 @@ require 'hangman_tournament/submit'
 require 'metric_fu'
 
 desc 'Run specs and stats; build and install gem; open app'
-task :default => [:spec, :gem, :install, :run]
+task :default => [:spec, :'metrics:all', :gem, :install, :run]
 
 desc "Run all specs"
 Spec::Rake::SpecTask.new('spec') do |t|
