@@ -13,7 +13,7 @@ module Kerryb
     end
 
     def suggest_guess
-      letter_counts = count_letters_in_all_words
+      letter_counts = count_letter_appearances
       find_highest_count letter_counts
     end
 
@@ -23,9 +23,8 @@ module Kerryb
 
     private
 
-    def count_letters_in_all_words
-      concatenated_words = @words.join('')
-      @letters.map {|letter| concatenated_words.count letter}
+    def count_letter_appearances
+      @letters.map {|letter| @words.select {|word| word.include? letter}.size}
     end
 
     def find_highest_count letter_counts

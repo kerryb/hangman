@@ -18,9 +18,9 @@ describe Kerryb::Possibilities do
   end
 
   describe 'suggesting a letter to guess' do
-    it 'provides the most common letter for the current word list' do
+    it 'provides the letter which appears in the most words' do
       possibilities = Kerryb::Possibilities.new %w(ant bee ape)
-      possibilities.suggest_guess.should == 'e'
+      possibilities.suggest_guess.should == 'a'
     end
   end
 
