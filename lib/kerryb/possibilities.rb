@@ -1,10 +1,17 @@
 module Kerryb
   class Possibilities
+    attr_reader :words
+
     def initialize words
-      @words = words
+      @words = words.dup
     end
 
-    def most_common_letter
+    def narrow_down pattern
+      regexp = /^#{pattern.gsub '_', '.'}$/
+      @words.reject! {|word| word !~ regexp}
+    end
+
+    def suggest_guess
       letter_counts = count_letters_in_all_words
       find_highest_count letter_counts
     end

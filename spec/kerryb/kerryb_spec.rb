@@ -20,9 +20,15 @@ describe Kerryb::Kerryb do
   end
 
   describe 'making a guess' do
-    it 'uses the most common letter in the word list' do
+    it 'updates the possibilities list with the current pattern' do
+      pattern = 'f__bar'
+      @possibilities.should_receive(:narrow_down).with pattern
+      @game.guess pattern, 7
+    end
+
+    it 'uses the suggested guess from the word list' do
       letter = 'x'
-      @possibilities.stub(:most_common_letter).and_return letter
+      @possibilities.stub(:suggest_guess).and_return letter
       @game.guess('___', 7).should == letter
     end
   end

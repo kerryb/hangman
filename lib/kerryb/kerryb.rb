@@ -24,7 +24,8 @@ module Kerryb
     # the word parameter would be "s___s", if you then guess 'o', the next turn it would be "s_o_s", and so on.
     # guesses_left is how many guesses you have left before your player is hung.
     def guess(word, guesses_left)
-      @possibilities.most_common_letter
+      @possibilities.narrow_down word
+      @possibilities.suggest_guess
     end
 
     # notifies you that your last guess was incorrect, and passes your guess back to the method
