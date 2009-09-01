@@ -8,14 +8,14 @@ describe Kerryb::Kerryb do
     Kerryb::Possibilities.stub(:new).and_return @possibilities
     @game = Kerryb::Kerryb.new
     @game.new_game 7
-    @game.word_list = []
+    @words = %w(ant bee)
+    @game.word_list = @words
   end
 
-  describe 'setting the word list' do
+  describe 'starting a new game' do
     it 'creates a new possibilities set' do
-      words = %w(ant bee)
-      Kerryb::Possibilities.should_receive(:new).with words
-      @game.word_list = words
+      Kerryb::Possibilities.should_receive(:new).with @words
+      @game.new_game 7
     end
   end
 

@@ -11,12 +11,13 @@ module Kerryb
     # Before starting a game, this method will be called to inform the player of all the possible words that may be
     # played.
     def word_list=(list)
-      @possibilities = Possibilities.new list
+      @word_list = list
     end
 
     # a new game has started.  The number of guesses the player has left is passed in (default 6),
     # in case you want to keep track of it.
     def new_game(guesses_left)
+      @possibilities = Possibilities.new @word_list
     end
 
     # Each turn your player must make a guess.  The word will be a bunch of underscores, one for each letter in the word.
