@@ -6,12 +6,14 @@ describe 'Playing a game' do
     game = Kerryb::Kerryb.new
     game.word_list = %w(ant bee ape aardvark)
     game.new_game 5
-    game.guess('___', 5).should == 'a'
-    game.incorrect_guess 'a'
-    game.guess('___', 4).should == 'e'
-    game.correct_guess 'e'
-    game.guess('_ee', 3).should == 'b'
-    game.correct_guess 'b'
-    game.game_result 'win', 'bee'
+    game.guess('___', 5).should == 'e'
+    game.incorrect_guess 'e'
+    game.guess('___', 4).should == 'a'
+    game.correct_guess 'a'
+    game.guess('a__', 3).should == 'n'
+    game.correct_guess 'n'
+    game.guess('an_', 3).should == 't'
+    game.correct_guess 't'
+    game.game_result 'win', 'ant'
   end
 end

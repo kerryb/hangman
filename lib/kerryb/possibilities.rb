@@ -8,13 +8,13 @@ module Kerryb
     end
 
     def narrow_down pattern
-      regexp = /^#{pattern.gsub '_', '.'}$/
+      regexp = /^#{pattern.gsub '_', "[#{@letters.join ''}]"}$/
       @words.reject! {|word| word !~ regexp}
     end
 
     def suggest_guess
       letter_counts = count_letter_appearances
-      find_highest_count letter_counts
+      choose_letter letter_counts
     end
 
     def letter_used letter
@@ -24,18 +24,30 @@ module Kerryb
     private
 
     def count_letter_appearances
-      @letters.map {|letter| @words.select {|word| word.include? letter}.size}
+      letter_counts = {}
+      @letters.each do |letter|
+        letter_counts[letter] = @words.select {|word| word.include? letter}.size
+      end
+      return letter_counts
     end
 
-    def find_highest_count letter_counts
-      highest_count, winning_index = 0, 0
-      letter_counts.each_with_index do |count, index|
-        if count > highest_count
-          winning_index = index
-          highest_count = count
-        end
+    def choose_letter letter_counts
+      sorted_letter_counts = letter_counts.sort {|a, b| a[1] <=> b[1]}
+      highest_count = sorted_letter_counts.last[1]
+      letters_in_most_words = sorted_letter_counts.select {|a| a[1] == highest_count}
+      if letters_in_most_words.size == 1
+        letters_in_most_words.first[0]
+      else
+        joint_most_common_letters = letters_in_most_words.map {|a| a[0]}
+        most_common_letter joint_most_common_letters
       end
-      @letters.to_a[winning_index]
+    end
+
+    def most_common_letter letters
+      concatenated_words = @words.join('')
+      letter_counts = letters.map {|letter| [letter, concatenated_words.count(letter)]}
+      sorted_letter_counts = letter_counts.sort {|a, b| a[1] <=> b[1]}
+      sorted_letter_counts.last[0]
     end
   end
 end
