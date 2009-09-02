@@ -46,12 +46,12 @@ end
 
 desc 'Install gem'
 task :install do
-  system "sudo gem install pkg/hangman_#{PKG_NAME}"
+  system "sudo jruby -S gem install pkg/hangman_#{PKG_NAME}"
 end
 
 desc 'Run app'
 task :run do
-  system 'open hangman.lll'
+  system 'jruby -S limelight open hangman.lll'
 end
 
 desc "Submit your player"
