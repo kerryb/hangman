@@ -46,8 +46,8 @@ module Kerryb
     def most_common_letter letters
       concatenated_words = @words.join('')
       letter_counts = letters.map {|letter| [letter, concatenated_words.count(letter)]}
-      letter_counts.sort! {|a, b| a[1] <=> b[1]}
-      letter_counts.last[0]
+      sorted_letter_counts = letter_counts.sort {|a, b| a[1] <=> b[1]}
+      sorted_letter_counts.last[0]
     end
   end
 end
