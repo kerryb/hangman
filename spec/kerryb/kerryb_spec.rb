@@ -20,15 +20,9 @@ describe Kerryb::Kerryb do
   end
 
   describe 'making a guess' do
-    it 'updates the possibilities list with the current pattern' do
-      pattern = 'f__bar'
-      @possibilities.should_receive(:narrow_down).with pattern
-      @game.guess pattern, 7
-    end
-
     it 'uses the suggested guess from the word list' do
-      @possibilities.stub(:suggest_guess).and_return 'x'
-      @game.guess('___', 7).should == 'x'
+      @possibilities.stub(:suggest_guess).with('f__').and_return 'x'
+      @game.guess('f__', 7).should == 'x'
     end
   end
 

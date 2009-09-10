@@ -1,18 +1,13 @@
 module Kerryb
   class Possibilities
-    attr_reader :words
-
     def initialize words
       @words = words.dup
       @letters = ('a'..'z').to_a
     end
 
-    def narrow_down pattern
+    def suggest_guess pattern
       regexp = /^#{pattern.gsub '_', "[#{@letters.join ''}]"}$/
       @words.reject! {|word| word !~ regexp}
-    end
-
-    def suggest_guess
       letter_counts = count_letter_appearances
       choose_letter letter_counts
     end
