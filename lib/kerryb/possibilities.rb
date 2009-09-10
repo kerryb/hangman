@@ -32,7 +32,7 @@ module Kerryb
     end
 
     def choose_letter letter_counts
-      sorted_letter_counts = letter_counts.sort {|a, b| a[1] <=> b[1]}
+      sorted_letter_counts = sort_letter_counts letter_counts
       highest_count = sorted_letter_counts.last[1]
       letters_in_most_words = sorted_letter_counts.select {|a| a[1] == highest_count}
       if letters_in_most_words.size == 1
@@ -46,8 +46,12 @@ module Kerryb
     def most_common_letter letters
       concatenated_words = @words.join('')
       letter_counts = letters.map {|letter| [letter, concatenated_words.count(letter)]}
-      sorted_letter_counts = letter_counts.sort {|a, b| a[1] <=> b[1]}
+      sorted_letter_counts = sort_letter_counts letter_counts
       sorted_letter_counts.last[0]
+    end
+
+    def sort_letter_counts letter_counts
+      letter_counts.sort {|a, b| a[1] <=> b[1]}
     end
   end
 end
