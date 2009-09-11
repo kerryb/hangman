@@ -2,10 +2,6 @@ require 'kerryb/possibilities'
 
 module Kerryb
   class Kerryb
-
-    def initialize
-    end
-
     def word_list=(list)
       @word_list = list
     end
