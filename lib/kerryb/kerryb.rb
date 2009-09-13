@@ -1,5 +1,7 @@
 module Kerryb
   class Kerryb
+    LetterScore = Struct.new :letter, :score
+
     def word_list= list
       @all_words = list
     end
@@ -32,11 +34,15 @@ module Kerryb
     private
 
     def choose_letter
-      winner = @letters.inject([nil, 0]) do |choice, letter|
-        score = 10 * words_containing(letter) + total_occurences_of(letter)
-        score > choice[1] ? [letter, score] : choice
+      winner = @letters.inject(LetterScore.new(nil, 0)) do |choice, letter|
+        score = letter_score letter
+        score > choice.score ? LetterScore.new(letter, score) : choice
       end
-      winner[0]
+      winner.letter
+    end
+
+    def letter_score letter
+      10 * words_containing(letter) + total_occurences_of(letter)
     end
 
     def words_containing letter
