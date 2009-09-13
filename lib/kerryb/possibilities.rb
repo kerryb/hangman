@@ -21,9 +21,13 @@ module Kerryb
     def count_letter_appearances
       letter_counts = {}
       @letters.each do |letter|
-        letter_counts[letter] = @words.select {|word| word.include? letter}.size
+        letter_counts[letter] = count_words_containing_letter letter
       end
       return letter_counts
+    end
+
+    def count_words_containing_letter letter
+      @words.select {|word| word.include? letter}.size
     end
 
     def choose_letter letter_counts
