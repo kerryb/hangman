@@ -35,14 +35,17 @@ module Kerryb
 
     def choose_letter
       winner = @letters.inject(LetterScore.new(nil, 0)) do |choice, letter|
-        score = letter_score letter
-        score > choice.score ? LetterScore.new(letter, score) : choice
+        highest_score choice, letter_score(letter)
       end
       winner.letter
     end
 
+    def highest_score *letter_scores
+      letter_scores.sort {|one, other| one.score <=> other.score}.last
+    end
+
     def letter_score letter
-      10 * words_containing(letter) + total_occurences_of(letter)
+      LetterScore.new(letter, 10 * words_containing(letter) + total_occurences_of(letter))
     end
 
     def words_containing letter
