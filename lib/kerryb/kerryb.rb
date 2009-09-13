@@ -30,23 +30,14 @@ module Kerryb
       @letters.delete guess
     end
 
-    def fail reason
-    end
-
-    def game_result result, word
-    end
+    def fail reason;end
+    def game_result result, word;end
 
     private
 
     def choose_letter
-      winner = @letters.inject(LetterScore.new(nil, 0)) do |choice, letter|
-        highest_score choice, letter_score(letter)
-      end
-      winner.letter
-    end
-
-    def highest_score *letter_scores
-      letter_scores.sort.last
+      scores = @letters.map {|letter| letter_score(letter)}
+      scores.sort.last.letter
     end
 
     def letter_score letter
