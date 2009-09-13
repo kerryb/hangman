@@ -33,11 +33,11 @@ module Kerryb
     def choose_letter letter_counts
       sorted_letter_counts = sort_letter_counts letter_counts
       highest_count = sorted_letter_counts.last[1]
-      letters_in_most_words = sorted_letter_counts.select {|a| a[1] == highest_count}
+      letters_in_most_words = sorted_letter_counts.select {|letter_count| letter_count[1] == highest_count}
       if letters_in_most_words.size == 1
         letters_in_most_words.first[0]
       else
-        joint_most_common_letters = letters_in_most_words.map {|a| a[0]}
+        joint_most_common_letters = letters_in_most_words.map {|letter_count| letter_count[0]}
         most_common_letter joint_most_common_letters
       end
     end
@@ -50,7 +50,7 @@ module Kerryb
     end
 
     def sort_letter_counts letter_counts
-      letter_counts.sort {|a, b| a[1] <=> b[1]}
+      letter_counts.sort {|first, second| first[1] <=> second[1]}
     end
   end
 end
