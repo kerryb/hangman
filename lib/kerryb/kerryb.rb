@@ -1,32 +1,32 @@
 module Kerryb
   class Kerryb
-    def word_list=(list)
+    def word_list= list
       @all_words = list
     end
 
-    def new_game(guesses_left)
+    def new_game guesses_left
       @words = @all_words.dup
       @letters = ('a'..'z').to_a
     end
 
-    def guess(word, guesses_left)
+    def guess word, guesses_left
       regexp = /^#{word.gsub '_', "[#{@letters.join ''}]"}$/
       @words.reject! {|word| word !~ regexp}
       choose_letter
     end
 
-    def incorrect_guess(guess)
+    def incorrect_guess guess
       @letters.delete guess
     end
 
-    def correct_guess(guess)
+    def correct_guess guess
       @letters.delete guess
     end
 
-    def fail(reason)
+    def fail reason
     end
 
-    def game_result(result, word)
+    def game_result result, word
     end
 
     private
