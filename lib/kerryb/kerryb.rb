@@ -1,6 +1,11 @@
 module Kerryb
   class Kerryb
     LetterScore = Struct.new :letter, :score
+    class LetterScore
+      def <=> other
+        score <=> other.score
+      end
+    end
 
     def word_list= list
       @all_words = list
@@ -41,7 +46,7 @@ module Kerryb
     end
 
     def highest_score *letter_scores
-      letter_scores.sort {|one, other| one.score <=> other.score}.last
+      letter_scores.sort.last
     end
 
     def letter_score letter
