@@ -37,7 +37,7 @@ module Kerryb
 
     def choose_letter
       scores = @letters.map {|letter| letter_score(letter)}
-      scores.sort.last.letter
+      scores.max.letter
     end
 
     def letter_score letter
