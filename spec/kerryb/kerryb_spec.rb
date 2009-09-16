@@ -8,8 +8,8 @@ describe Kerryb::Kerryb do
     @game.new_game 7
   end
 
-  describe 'suggesting a letter to guess' do
-    it 'provides the letter which appears in the most words' do
+  describe 'guessing a letter' do
+    it 'uses the one which appears in the most words' do
       @game.guess('___', 5).should == 'a'
     end
 
@@ -28,7 +28,7 @@ describe Kerryb::Kerryb do
     end
 
     describe 'when two letters appear in the same number of words' do
-      it 'provides the one that appears the most times' do
+      it 'gives the one that appears the most times' do
         @game.word_list = %w(ant bee ape)
         @game.new_game 7
         @game.guess('___', 5).should == 'e'
