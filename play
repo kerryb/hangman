@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'lib/kerryb/kerryb'
-require 'benchmark'
 
 unless ARGV.size == 1
   $stderr.puts 'Usage: play <number of games>'
@@ -13,38 +12,37 @@ game = Kerryb::Kerryb.new
 game.word_list = words
 number_won = 0
 
-puts Benchmark.measure {
-  (1..number_of_games).each do |game_number|
-    guesses_left = 6
-    correct_letters = ''
-    word = words[rand(words.size)]
-    pattern = '_' * word.length
-    game.new_game guesses_left
-    won = false
-    while guesses_left > 0 && !won
-      puts "#{pattern} (#{guesses_left} guesses left)"
-      guess = game.guess(pattern, guesses_left)
-      puts "you guessed #{guess}"
-      if word.include? guess
-        game.correct_guess guess
-        correct_letters += guess
-      else
-        game.incorrect_guess guess
-        guesses_left -= 1
-      end
-      pattern = word.gsub /[^#{correct_letters}]/, '_' unless correct_letters.empty?
-      won = true unless pattern.include? '_'
-    end
-    if won
-      puts "You won! The word was #{word}"
-      game.game_result 'win', word
-      number_won += 1
+start_time = Time.now
+(1..number_of_games).each do |game_number|
+  guesses_left = 6
+  correct_letters = ''
+  word = words[rand(words.size)]
+  pattern = '_' * word.length
+  game.new_game guesses_left
+  won = false
+  while guesses_left > 0 && !won
+    puts "#{pattern} (#{guesses_left} guesses left)"
+    guess = game.guess(pattern, guesses_left)
+    puts "you guessed #{guess}"
+    if word.include? guess
+      game.correct_guess guess
+      correct_letters += guess
     else
-      puts "You lost! The word was #{word}."
-      game.fail 'Fail'
-      game.game_result 'loss', word
+      game.incorrect_guess guess
+      guesses_left -= 1
     end
-    puts "Current score: #{number_won}/#{game_number}"
-    puts "\n      user     system      total        real"
+    pattern = word.gsub /[^#{correct_letters}]/, '_' unless correct_letters.empty?
+    won = true unless pattern.include? '_'
   end
-}
+  if won
+    puts "You won! The word was #{word}"
+    game.game_result 'win', word
+    number_won += 1
+  else
+    puts "You lost! The word was #{word}."
+    game.fail 'Fail'
+    game.game_result 'loss', word
+  end
+  puts "Current score: #{number_won}/#{game_number}"
+end
+puts "Approx #{'%.1f' % ((Time.now - start_time).to_f / number_of_games)} seconds per game"
