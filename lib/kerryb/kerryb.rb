@@ -13,13 +13,17 @@ module Kerryb
 
     def new_game guesses_left
       @words = @all_words.dup
-      @letters = ('a'..'z').to_a
+      @letters = %w(e t a o i n s r h l d c u m f p g w y b v k x j q z)
     end
 
     def guess word, guesses_left
       regexp = /^#{word.gsub '_', "[#{@letters.join ''}]"}$/
-      @words.reject! {|word| word !~ regexp}
-      choose_letter
+        if word =~ /^_*$/
+          @letters.first
+        else
+          @words.reject! {|word| word !~ regexp}
+          choose_letter
+        end
     end
 
     def incorrect_guess guess
