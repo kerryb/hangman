@@ -13,17 +13,15 @@ module Kerryb
 
     def new_game guesses_left
       @words = @all_words.dup
-      @letters = %w(e t a o i n s r h l d c u m f p g w y b v k x j q z)
+      @letters = 'etaoinsrhldcumfpgwybvkxjqz'.split ''
     end
 
     def guess word, guesses_left
-      regexp = /^#{word.gsub '_', "[#{@letters.join ''}]"}$/
-        if word =~ /^_*$/
-          @letters.first
-        else
-          @words.reject! {|word| word !~ regexp}
-          choose_letter
-        end
+      if word =~ /^_*$/
+        guess_by_letter_frequency
+      else
+        guess_by_pattern /^#{word.gsub '_', "[#{@letters.join ''}]"}$/
+      end
     end
 
     def incorrect_guess guess
@@ -38,6 +36,15 @@ module Kerryb
     def game_result result, word;end
 
     private
+
+    def guess_by_letter_frequency
+      @letters.first
+    end
+
+    def guess_by_pattern pattern
+      @words.reject! {|word| word !~ pattern}
+      choose_letter
+    end
 
     def choose_letter
       scores = @letters.map {|letter| letter_score(letter)}
