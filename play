@@ -45,4 +45,4 @@ start_time = Time.now
   end
   puts "Current score: #{number_won}/#{game_number}"
 end
-puts "Approx #{'%.1f' % ((Time.now - start_time).to_f / number_of_games)} seconds per game"
+puts "#{'%.2f' % ((Time.now - start_time).to_f / number_of_games)} seconds per game"
