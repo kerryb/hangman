@@ -11,15 +11,15 @@ module Kerryb
       @all_words = list
     end
 
-    def new_game guesses_left
+    def new_game _
       @words = nil
       @letters = 'etaoinsrhldcumfpgwybvkxjqz'.split ''
     end
 
-    def guess word, guesses_left
+    def guess word, _
       @words ||= words_of_length word.length
       if word =~ /^_*$/
-        guess_by__frequency
+        guess_by_frequency
       else
         guess_by_pattern /^#{word.gsub '_', "[#{@letters.join ''}]"}$/
       end
@@ -28,13 +28,10 @@ module Kerryb
     def incorrect_guess guess
       @letters.delete guess
     end
+    alias :correct_guess :incorrect_guess
 
-    def correct_guess guess
-      @letters.delete guess
-    end
-
-    def fail reason;end
-    def game_result result, word;end
+    def fail *_;end
+    def game_result *_;end
 
     private
 
@@ -42,7 +39,7 @@ module Kerryb
       @all_words.reject {|word| word.length != length}
     end
 
-    def guess_by__frequency
+    def guess_by_frequency
       @letters.first
     end
 
@@ -52,15 +49,14 @@ module Kerryb
     end
 
     def choose_letter
-      scores = @letters.map {|letter| letter_score(letter)}
-      scores.max.letter
+      @letters.map {|letter| score letter}.max.letter
     end
 
-    def letter_score letter
-      LetterScore.new(letter, 10 * words_containing(letter) + occurences_of(letter))
+    def score letter
+      LetterScore.new letter, 10 * words_with(letter) + occurences_of(letter)
     end
 
-    def words_containing letter
+    def words_with letter
       @words.select {|word| word.include? letter}.size
     end
 
