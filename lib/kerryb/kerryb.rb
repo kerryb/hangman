@@ -12,13 +12,14 @@ module Kerryb
     end
 
     def new_game guesses_left
-      @words = @all_words.dup
+      @words = nil
       @letters = 'etaoinsrhldcumfpgwybvkxjqz'.split ''
     end
 
     def guess word, guesses_left
+      @words ||= words_of_length word.length
       if word =~ /^_*$/
-        guess_by_letter_frequency
+        guess_by__frequency
       else
         guess_by_pattern /^#{word.gsub '_', "[#{@letters.join ''}]"}$/
       end
@@ -37,7 +38,11 @@ module Kerryb
 
     private
 
-    def guess_by_letter_frequency
+    def words_of_length length
+      @all_words.reject {|word| word.length != length}
+    end
+
+    def guess_by__frequency
       @letters.first
     end
 
@@ -52,14 +57,14 @@ module Kerryb
     end
 
     def letter_score letter
-      LetterScore.new(letter, 10 * words_containing(letter) + total_occurences_of(letter))
+      LetterScore.new(letter, 10 * words_containing(letter) + occurences_of(letter))
     end
 
     def words_containing letter
       @words.select {|word| word.include? letter}.size
     end
 
-    def total_occurences_of letter
+    def occurences_of letter
       @words.join('').count letter
     end
   end
