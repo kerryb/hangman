@@ -52,14 +52,14 @@ module Kerryb
     end
 
     def score letter
-      LetterScore.new letter, 10 * words_with(letter) + occurences_of(letter)
+      LetterScore.new letter, 10 * words_with(letter) + occurrences_of(letter)
     end
 
     def words_with letter
       @words.select {|word| word.include? letter}.size
     end
 
-    def occurences_of letter
+    def occurrences_of letter
       @words.join('').count letter
     end
   end
