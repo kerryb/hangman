@@ -10,12 +10,12 @@ module Kerryb
       @all_words = list
     end
 
-    def new_game _
+    def new_game guesses
       @words = nil
       @letters = 'etaoinsrhldcumfpgwybvkxjqz'.split ''
     end
 
-    def guess word, _
+    def guess word, guesses
       @words ||= words_of_length word.length
       if word =~ /^_*$/
         guess_by_frequency
