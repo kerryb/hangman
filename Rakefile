@@ -14,7 +14,7 @@ Spec::Rake::SpecTask.new('spec') do |t|
 end
 
 PKG_NAME = "kerryb"
-PKG_VERSION   = "1.2"
+PKG_VERSION   = "1.3"
 
 spec = Gem::Specification.new do |s|
   s.name = "hangman_#{PKG_NAME}"
