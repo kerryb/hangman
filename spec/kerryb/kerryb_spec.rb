@@ -48,7 +48,7 @@ describe Kerryb::Kerryb do
     end
   end
 
-  describe 'Playing a game' do
+  describe 'Playing a winning game' do
     it 'all turns out much as expected' do
       game = Kerryb::Kerryb.new
       game.word_list = %w(ant bee ape aardvark)
@@ -62,6 +62,20 @@ describe Kerryb::Kerryb do
       game.guess('a_t', 3).should == 'n'
       game.correct_guess 'n'
       game.game_result 'win', 'ant'
+    end
+  end
+
+  describe 'Playing a losing game' do
+    it 'all turns out much as expected' do
+      game = Kerryb::Kerryb.new
+      game.word_list = %w(a b z)
+      game.new_game 2
+      game.guess('_', 2).should == 'e'
+      game.incorrect_guess 'e'
+      game.guess('_', 1).should == 't'
+      game.incorrect_guess 't'
+      game.fail 'z'
+      game.game_result 'loss', 'z'
     end
   end
 end
