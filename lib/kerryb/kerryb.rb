@@ -1,7 +1,6 @@
 module Kerryb
   class Kerryb
-    LetterScore = Struct.new :letter, :score
-    class LetterScore
+    LetterScore = Struct.new :letter, :score do
       def <=> other
         score <=> other.score
       end
